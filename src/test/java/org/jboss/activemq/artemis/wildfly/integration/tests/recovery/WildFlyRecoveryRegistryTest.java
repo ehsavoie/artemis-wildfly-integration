@@ -96,6 +96,7 @@ public class WildFlyRecoveryRegistryTest extends ActiveMQRAClusteredTestBase
 
       qResourceAdapter.setConnectorClassName(INVM_CONNECTOR_FACTORY);
       qResourceAdapter.setConnectionParameters("server-id=1");
+      Thread.sleep(10);
 
       assertTrue(WildFlyActiveMQRecoveryRegistry.getInstance().getXAResources().length == 2);
    }
