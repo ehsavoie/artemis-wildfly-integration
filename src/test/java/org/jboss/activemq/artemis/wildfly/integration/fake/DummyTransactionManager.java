@@ -21,55 +21,55 @@
  */
 package org.jboss.activemq.artemis.wildfly.integration.fake;
 
-import javax.transaction.*;
+import jakarta.transaction.*;
 
 /**
  * @author <a href="mailto:andy.taylor@jboss.org">Andy Taylor</a>
  */
-public class DummyTransactionManager implements TransactionManager
-{
-    public void begin() throws NotSupportedException, SystemException
-    {
+public class DummyTransactionManager implements TransactionManager {
+
+    @Override
+    public void begin() throws NotSupportedException, SystemException {
 
     }
 
-    public void commit() throws HeuristicMixedException, HeuristicRollbackException, IllegalStateException, RollbackException, SecurityException, SystemException
-    {
+    @Override
+    public void commit() throws HeuristicMixedException, HeuristicRollbackException, IllegalStateException, RollbackException, SecurityException, SystemException {
 
     }
 
-    public int getStatus() throws SystemException
-    {
+    @Override
+    public int getStatus() throws SystemException {
         return 0;
     }
 
-    public Transaction getTransaction() throws SystemException
-    {
+    @Override
+    public Transaction getTransaction() throws SystemException {
         return null;
     }
 
-    public void resume(Transaction transaction) throws IllegalStateException, InvalidTransactionException, SystemException
-    {
+    @Override
+    public void resume(Transaction transaction) throws IllegalStateException, InvalidTransactionException, SystemException {
 
     }
 
-    public void rollback() throws IllegalStateException, SecurityException, SystemException
-    {
+    @Override
+    public void rollback() throws IllegalStateException, SecurityException, SystemException {
 
     }
 
-    public void setRollbackOnly() throws IllegalStateException, SystemException
-    {
+    @Override
+    public void setRollbackOnly() throws IllegalStateException, SystemException {
 
     }
 
-    public void setTransactionTimeout(int i) throws SystemException
-    {
+    @Override
+    public void setTransactionTimeout(int i) throws SystemException {
 
     }
 
-    public Transaction suspend() throws SystemException
-    {
+    @Override
+    public Transaction suspend() throws SystemException {
         return null;
     }
 }

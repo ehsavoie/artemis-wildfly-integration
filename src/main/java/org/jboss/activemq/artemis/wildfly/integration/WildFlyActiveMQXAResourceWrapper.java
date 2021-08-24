@@ -13,8 +13,8 @@
 
 package org.jboss.activemq.artemis.wildfly.integration;
 
-import javax.transaction.xa.XAResource;
 import java.util.Map;
+import javax.transaction.xa.XAResource;
 
 import org.apache.activemq.artemis.service.extensions.xa.ActiveMQXAResourceWrapperImpl;
 

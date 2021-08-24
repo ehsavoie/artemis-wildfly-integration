@@ -18,8 +18,19 @@ package org.jboss.activemq.artemis.wildfly.integration.tests.recovery;
 
 import static javax.naming.Context.INITIAL_CONTEXT_FACTORY;
 
+import jakarta.resource.spi.BootstrapContext;
+import jakarta.resource.spi.UnavailableException;
+import jakarta.resource.spi.XATerminator;
+import jakarta.resource.spi.work.ExecutionContext;
+import jakarta.resource.spi.work.Work;
+import jakarta.resource.spi.work.WorkContext;
+import jakarta.resource.spi.work.WorkException;
+import jakarta.resource.spi.work.WorkListener;
+import jakarta.resource.spi.work.WorkManager;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Timer;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -112,6 +123,75 @@ public class WildFlyRecoveryRegistryTest extends ActiveMQRAClusteredTestBase {
         for (int i = 0; i < resources.length; i++) {
             assertTrue(resources[i] instanceof org.jboss.jca.core.spi.transaction.xa.XAResourceWrapper);
             assertTrue(resources[i] instanceof org.jboss.tm.XAResourceWrapper);
+        }
+    }
+
+    public class MyBootstrapContext implements BootstrapContext {
+
+        WorkManager workManager = new DummyWorkManager();
+
+        @Override
+        public Timer createTimer() throws UnavailableException {
+            return null;
+        }
+
+        @Override
+        public boolean isContextSupported(Class<? extends WorkContext> aClass) {
+            return false;
+        }
+
+        @Override
+        public TransactionSynchronizationRegistry getTransactionSynchronizationRegistry() {
+            return null;
+        }
+
+        @Override
+        public WorkManager getWorkManager() {
+            return workManager;
+        }
+
+        @Override
+        public XATerminator getXATerminator() {
+            return null;
+        }
+
+        class DummyWorkManager implements WorkManager {
+
+            @Override
+            public void doWork(Work work) throws WorkException {
+            }
+
+            @Override
+            public void doWork(Work work,
+                    long l,
+                    ExecutionContext executionContext,
+                    WorkListener workListener) throws WorkException {
+            }
+
+            @Override
+            public long startWork(Work work) throws WorkException {
+                return 0;
+            }
+
+            @Override
+            public long startWork(Work work,
+                    long l,
+                    ExecutionContext executionContext,
+                    WorkListener workListener) throws WorkException {
+                return 0;
+            }
+
+            @Override
+            public void scheduleWork(Work work) throws WorkException {
+                work.run();
+            }
+
+            @Override
+            public void scheduleWork(Work work,
+                    long l,
+                    ExecutionContext executionContext,
+                    WorkListener workListener) throws WorkException {
+            }
         }
     }
 }
